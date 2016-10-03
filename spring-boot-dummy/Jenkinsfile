@@ -10,7 +10,7 @@ node ('master'){
             sh 'cp build/libs/spring-boot-dummy-0.1.0.jar docker/'
         }
         dir('spring-boot-dummy/docker') {
-            sh 'docker build -t laszlocph/spring-boot-dummy:latest .'
+            sh 'sudo docker build -t laszlocph/spring-boot-dummy:latest .'
         }
     }
 }
