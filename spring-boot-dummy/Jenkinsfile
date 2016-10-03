@@ -1,7 +1,16 @@
 node ('master'){
-    stage 'Build and Test'
     checkout scm
-    dir('spring-boot-dummy') {
-        sh './gradlew clean build'
+    stage ('Build and Test') {
+        dir('spring-boot-dummy') {
+            sh './gradlew clean build'
+        }
+    }
+    stage ('Build Docker image') {
+        dir('spring-boot-dummy') {
+            cp build/libs/spring-boot-dummy-0.1.0.jar docker/
+        }
+        dir('spring-boot-dummy/docker') {
+            docker build -t laszlocph/spring-boot-dummy:latest .
+        }
     }
 }
