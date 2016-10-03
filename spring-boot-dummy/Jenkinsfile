@@ -1,5 +1,7 @@
 node ('master'){
     stage 'Build and Test'
     checkout scm
-    sh './spring-boot-dummy/gradlew clean build'
+    dir('spring-boot-dummy') {
+        sh './gradlew clean build'
+    }
 }
