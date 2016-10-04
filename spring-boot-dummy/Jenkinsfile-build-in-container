@@ -7,7 +7,9 @@ node ('master'){
     }
     stage ('Build in Container') {
         dir('spring-boot-dummy') {
-            sh 'mkdir build'
+            if(!fileExists('build')) {
+                sh 'mkdir build'
+            }
             sh 'sudo docker run -u $(id -u) --network=host -v $(pwd build)/build:/spring-boot-dummy/build laszlocph/build-spring-boot-dummy'
             sh 'ls -l build/'
         }
