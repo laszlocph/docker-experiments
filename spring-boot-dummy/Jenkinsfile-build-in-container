@@ -1,0 +1,22 @@
+node ('master'){
+    checkout scm
+    stage ('Build Building container') {
+        dir('spring-boot-dummy') {
+            sh 'sudo docker build --build-arg user=$(id -u) -t laszlocph/build-spring-boot-dummy .'
+        }
+    }
+    stage ('Build in Container') {
+        dir('spring-boot-dummy') {
+            sh 'sudo docker run -it -u $(id -u) --network=host -v $(pwd build)/build:/spring-boot-dummy/build laszlocph/build-spring-boot-dummy'
+        }
+    }
+
+    stage ('Build Container with latest Build') {
+        dir('spring-boot-dummy') {
+            sh 'cp build/libs/spring-boot-dummy-0.1.0.jar docker/'
+        }
+        dir('spring-boot-dummy/docker') {
+            sh 'sudo docker build -t laszlocph/spring-boot-dummy:latest .'
+        }
+    }
+}
