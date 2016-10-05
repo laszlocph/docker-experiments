@@ -1,4 +1,4 @@
-node ('master'){
+node ('master') {
     checkout scm
     stage ('Build Building container') {
         dir('spring-boot-dummy') {
