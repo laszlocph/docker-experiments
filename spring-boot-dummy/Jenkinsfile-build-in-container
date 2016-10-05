@@ -7,18 +7,17 @@ node ('master'){
     }
     stage ('Build in Container') {
         dir('spring-boot-dummy') {
-            if(!fileExists('build')) {
-                sh 'mkdir build'
-            }
-            sh 'sudo docker run -u $(id -u) --network=host -v $(pwd build)/build:/spring-boot-dummy/build laszlocph/build-spring-boot-dummy'
-            sh 'ls -l build/'
+            def containerId = sh 'sudo docker run -d -u $(id -u) --network=host -v $(pwd build)/build:/spring-boot-dummy/build ' +
+                    'laszlocph/build-spring-boot-dummy'
+            sh 'sudo docker exec ' + containerId + ' ./gradlew build'
+            sh 'sudo docker cp ' + containerId + ':/spring-boot-dummy/build/libs/spring-boot-dummy-0.1.0.jar docker/spring-boot-dummy-0.1.0.jar'
+            sh 'sudo docker stop ' + containerId
+            sh 'sudo docker rm ' + containerId
+            sh 'ls -la'
         }
     }
 
     stage ('Build Container with latest Build') {
-        dir('spring-boot-dummy') {
-            sh 'cp build/libs/spring-boot-dummy-0.1.0.jar docker/'
-        }
         dir('spring-boot-dummy/docker') {
             sh 'sudo docker build -t laszlocph/spring-boot-dummy:latest .'
         }

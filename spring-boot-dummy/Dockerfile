@@ -6,6 +6,5 @@ WORKDIR spring-boot-dummy
 ADD . .
 RUN chown -R $user:$user .
 
-
 USER $user
-CMD ./gradlew build
+CMD sleep 1h
