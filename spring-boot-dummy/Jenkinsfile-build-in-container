@@ -2,14 +2,14 @@ node ('master'){
     checkout scm
     stage ('Build Building container') {
         dir('spring-boot-dummy') {
-            sh 'sudo docker build --build-arg user=$(id -u) -t laszlocph/build-spring-boot-dummy .'
+            sh 'sudo docker build -t laszlocph/build-spring-boot-dummy .'
         }
     }
     stage ('Build in Container') {
         dir('spring-boot-dummy') {
 
             def CONTAINER_ID = sh (
-                    script: "sudo docker run -d -u \$(id -u) --network=host laszlocph/build-spring-boot-dummy",
+                    script: "sudo docker run -d --network=host laszlocph/build-spring-boot-dummy",
                     returnStdout: true
             ).trim()
             echo "Container id: ${CONTAINER_ID}"
