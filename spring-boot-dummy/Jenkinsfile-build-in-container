@@ -10,15 +10,15 @@ node ('master'){
 
             def CONTAINER_ID = sh (
                     script: "sudo docker run -d -u \$(id -u) --network=host laszlocph/build-spring-boot-dummy",
-                    returnStatus: true
-            ) == 0
+                    returnStdout: true
+            ).trim()
             echo "Container id: ${CONTAINER_ID}"
 
-            sh 'sudo docker exec ${vars.CONTAINER_ID} ./gradlew build'
-            sh 'sudo docker cp ${vars.CONTAINER_ID}:/spring-boot-dummy/build/libs/spring-boot-dummy-0.1.0.jar docker/spring-boot-dummy-0.1.0.jar'
-            sh 'sudo docker stop ${vars.CONTAINER_ID}'
-            sh 'sudo docker rm ${vars.CONTAINER_ID}'
-            sh 'ls -la'
+            sh "sudo docker exec ${CONTAINER_ID} ./gradlew build"
+            sh "sudo docker cp ${CONTAINER_ID}:/spring-boot-dummy/build/libs/spring-boot-dummy-0.1.0.jar docker/spring-boot-dummy-0.1.0.jar"
+            sh "sudo docker stop ${CONTAINER_ID}"
+            sh "sudo docker rm ${CONTAINER_ID}"
+            sh "ls -la"
         }
     }
 
