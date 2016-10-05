@@ -8,11 +8,11 @@ node ('master'){
     stage ('Build in Container') {
         dir('spring-boot-dummy') {
 
-            vars.CONTAINER_ID = sh (
+            def CONTAINER_ID = sh (
                     script: "sudo docker run -d -u \$(id -u) --network=host laszlocph/build-spring-boot-dummy",
                     returnStatus: true
             ) == 0
-            echo "Container id: ${vars.CONTAINER_ID}"
+            echo "Container id: ${CONTAINER_ID}"
 
             sh 'sudo docker exec ${vars.CONTAINER_ID} ./gradlew build'
             sh 'sudo docker cp ${vars.CONTAINER_ID}:/spring-boot-dummy/build/libs/spring-boot-dummy-0.1.0.jar docker/spring-boot-dummy-0.1.0.jar'
