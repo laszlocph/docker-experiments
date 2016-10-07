@@ -1,0 +1,7 @@
+version: '2'
+
+services:
+ extra-service:
+   image: anapsix/alpine-java
+   command: /bin/true
+

@@ -1,0 +1,13 @@
+version: '2'
+
+services:
+ web:
+   image: laszlocph/composetest
+   ports:
+    - "${PORT}:5000"
+   depends_on:
+    - redis
+   #command: /bin/true
+ redis:
+   image: redis
+   #command: /bin/true
