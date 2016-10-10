@@ -10,4 +10,3 @@ services:
    #command: /bin/true
  redis:
    image: redis
-   #command: /bin/true
