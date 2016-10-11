@@ -9,3 +9,4 @@ ENV=$1
 
 eval "$(docker-machine env composeHost)"
 docker-compose -p $ENV stop
+docker-compose -p $ENV rm --all -f
