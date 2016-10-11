@@ -21,10 +21,10 @@ from docopt import docopt
 
 if __name__ == '__main__':
     arguments = docopt(__doc__, version='Composer 0.1')
-    print arguments
+    #print arguments
 
 
-with open("docker-compose.yml") as stream:
+with open("/composer/project/docker-compose.yml") as stream:
     try:
         parsedYaml = yaml.load(stream, yaml.RoundTripLoader)
     except yaml.YAMLError as exc:
