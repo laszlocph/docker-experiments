@@ -1,2 +1,4 @@
 .idea
 .gradle
+
+env/docker-compose.*.yml

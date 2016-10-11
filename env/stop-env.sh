@@ -7,5 +7,6 @@ fi
 
 ENV=$1
 
-docker-compose -p $ENV -f docker-compose.yml stop
-docker-compose -p $ENV -f docker-compose.yml rm --all -f
+eval "$(docker-machine env composeHost)"
+docker-compose -p $ENV -f docker-compose.$ENV.yml stop
+docker-compose -p $ENV -f docker-compose.$ENV.yml rm --all -f

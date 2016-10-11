@@ -1,3 +1,4 @@
 #!/usr/bin/env bash
 
-docker-compose ps
+eval "$(docker-machine env composeHost)"
+docker ps
