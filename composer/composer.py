@@ -24,7 +24,7 @@ if __name__ == '__main__':
     print arguments
 
 
-with open("docker-compose.core.yml") as stream:
+with open("docker-compose.yml") as stream:
     try:
         parsedYaml = yaml.load(stream, yaml.RoundTripLoader)
     except yaml.YAMLError as exc:
