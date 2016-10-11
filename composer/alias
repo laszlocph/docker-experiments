@@ -1,1 +1,1 @@
-alias composer='docker run --rm -it -v $(pwd):/composer/project laszlocph/composer'
+alias composer='docker run --rm -it -u $(id -u):$(id -u) -v $(pwd):/composer/project laszlocph/composer'

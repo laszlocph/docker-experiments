@@ -4,7 +4,7 @@
 and the fact the not every service is needed always.
 
 Usage:
-  composer.py compose [--with=SERVICES...] [--without=SERVICES...]
+  composer.py compose --env=ENV [--with=SERVICES...] [--without=SERVICES...]
   composer.py (-h | --help)
   composer.py --version
 
@@ -18,10 +18,13 @@ Options:
 import ruamel.yaml as yaml
 import inquirer
 from docopt import docopt
+import urllib, json
 
 if __name__ == '__main__':
     arguments = docopt(__doc__, version='Composer 0.1')
     #print arguments
+
+#################################
 
 
 with open("/composer/project/docker-compose.yml") as stream:
@@ -54,6 +57,7 @@ elif arguments['--without']:
         for serviceNotNeeded in arguments['--without'][0].split(','):
             del services[serviceNotNeeded]
 else:
+    print "\n"
     questions = [
         inquirer.Checkbox('services',
                           message="What services do you need?",
@@ -67,5 +71,36 @@ else:
     for serviceNotNeeded in notNeededServices:
         del services[serviceNotNeeded]
 
+################################
 
-print(yaml.dump(parsedYaml, Dumper=yaml.RoundTripDumper))
+# inspired by http://stackoverflow.com/questions/38252507/how-can-i-get-comments-from-a-yaml-file-using-ruamel-yaml-in-python
+for service, props in services.items():
+    if 'image' in services[service].ca.items:
+        comment = services[service].ca.items['image'][2].value
+        repo_url = comment[1:]
+
+        response = urllib.urlopen(repo_url)
+        data = json.loads(response.read())
+
+        branches = []
+        for branch in data:
+            branches.append(branch['name'])
+
+        questions = [
+            inquirer.List('branch',
+                              message="Which " + service + " branch do you prefer?",
+                              choices=branches
+                              ),
+        ]
+        branch = inquirer.prompt(questions)['branch']
+        if branch != 'master':
+            props['image'] = props['image'] + ':' + branch
+
+modifiedYaml = yaml.dump(parsedYaml, Dumper=yaml.RoundTripDumper)
+fileName = "/composer/project/docker-compose." + arguments['--env']  + ".yml"
+
+target = open(fileName, 'w')
+target.write(modifiedYaml)
+target.close()
+
+print "Compose file written to " + fileName

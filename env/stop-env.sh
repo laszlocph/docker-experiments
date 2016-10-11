@@ -7,5 +7,5 @@ fi
 
 ENV=$1
 
-docker-compose -p $ENV -f docker-compose.core.yml stop
-docker-compose -p $ENV -f docker-compose.core.yml rm --all -f
+docker-compose -p $ENV -f docker-compose.yml stop
+docker-compose -p $ENV -f docker-compose.yml rm --all -f
