@@ -1,0 +1,19 @@
+{
+    "containerDefinitions": [
+        {
+            "cpu": 100,
+            "essential": true,
+            "image": "laszlocph/composetest",
+            "memory": 125,
+            "name": "web-python",
+            "portMappings": [
+                {
+                    "containerPort": 5000,
+                    "hostPort": 5000
+                }
+            ]
+        }
+    ],
+    "family": "web-python",
+    "volumes": []
+}

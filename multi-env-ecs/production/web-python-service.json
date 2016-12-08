@@ -1,0 +1,19 @@
+{
+    "cluster": "cluster01",
+    "serviceName": "web-python",
+    "taskDefinition": "web-python:1",
+    "loadBalancers": [
+        {
+            "targetGroupArn": "arn:aws:elasticloadbalancing:eu-west-1:782027979363:targetgroup/target01/03f4ca3155c8db4a",
+            "containerName": "web-python",
+            "containerPort": 5000
+        }
+    ], 
+    "desiredCount": 3,
+    "clientToken": "a1yzFkCnk6FD8QBtBIYN8GBSqpOYieIk",
+    "role": "ecsServiceRole",
+    "deploymentConfiguration": {
+        "maximumPercent": 200,
+        "minimumHealthyPercent": 50
+    }
+}

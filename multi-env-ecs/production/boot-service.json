@@ -1,0 +1,19 @@
+{
+  "cluster": "cluster01",
+  "serviceName": "boot",
+  "taskDefinition": "boot:1",
+  "loadBalancers": [
+    {
+      "targetGroupArn": "arn:aws:elasticloadbalancing:eu-west-1:782027979363:targetgroup/target01/03f4ca3155c8db4a",
+      "containerName": "boot",
+      "containerPort": 8080
+    }
+  ],
+  "desiredCount": 2,
+  "clientToken": "11yzFkCnk6FD8QBtBIYN8GBSqpOYieIk",
+  "role": "ecsServiceRole",
+  "deploymentConfiguration": {
+    "maximumPercent": 200,
+    "minimumHealthyPercent": 50
+  }
+}

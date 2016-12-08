@@ -1,0 +1,19 @@
+version: '2'
+
+services:
+  web-python:
+    image: laszlocph/composetest
+    ports:
+    - ${PORT}:5000
+    links:
+    - redis
+    cpu_shares: 100
+    mem_limit: 131200000
+  boot:
+    image: laszlocph/spring-boot-dummy:new-endpoint #https://api.github.com/repos/laszlocph/spring-boot-dummy/branches
+    cpu_shares: 300
+    mem_limit: 262400000
+  redis:
+    image: redis
+    cpu_shares: 100
+    mem_limit: 131200000

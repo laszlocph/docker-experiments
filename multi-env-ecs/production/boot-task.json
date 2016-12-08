@@ -1,0 +1,19 @@
+{
+    "containerDefinitions": [
+        {
+            "cpu": 300,
+            "essential": true,
+            "image": "laszlocph/spring-boot-dummy:exposed",
+            "memory": 300,
+            "name": "boot",
+            "portMappings": [
+                {
+                    "containerPort": 8080,
+                    "hostPort": 8080
+                }
+            ]
+        }
+    ],
+    "family": "boot",
+    "volumes": []
+}
